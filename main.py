@@ -38,6 +38,33 @@ def main(page: ft.Page):
     # Tutti i TextField per le info necessarie per aggiungere un nuovo strumento (tipo, marca, anno, contatore posti)
     # TODO
 
+    def handleRemove(e):
+        val = textValoreEuro.value
+        # metto una condizione che impedisca di inserire valori negativi
+        if val > 0:
+            textValoreEuro.value = val - 1
+            textValoreEuro.update()
+
+    def handleAdd(e):
+        val = textValoreEuro.value
+        textValoreEuro.value = val + 1
+        textValoreEuro.update()
+
+    textTipo = ft.TextField("Tipo")
+    textMarca = ft.TextField("Marca")
+    textAnnoAcquisto = ft.TextField("Anno Acquisto")
+    # creazione del counter per incrementare o decrementare il valore in euro dello strumento
+
+    btnMinus = ft.IconButton(icon=ft.Icons.REMOVE,
+                             icon_color="red",
+                             icon_size=24, on_click=handleRemove)
+    btnAdd = ft.IconButton(icon=ft.Icons.ADD,
+                           icon_color="green",
+                           icon_size=24, on_click=handleAdd)
+    textValoreEuro = ft.TextField(width=100, disabled=True,
+                          value = 0,
+                          text_align=ft.TextAlign.CENTER)
+
     # --- FUNZIONI APP ---
     def aggiorna_lista_strumenti():
         lista_strumenti.controls.clear()
@@ -81,6 +108,11 @@ def main(page: ft.Page):
 
         # Sezione 3
         # TODO
+        ft.Divider(),
+        ft.Text("Aggiungi nuovo strumento", size=20),
+        ft.Row(spacing=50,
+               controls=[textTipo, textMarca, textAnnoAcquisto, btnMinus, textValoreEuro, btnAdd],
+               alignment=ft.MainAxisAlignment.CENTER),
 
         # Sezione 4
         ft.Divider(),
