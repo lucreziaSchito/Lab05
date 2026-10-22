@@ -113,6 +113,7 @@ def main(page: ft.Page):
         ft.Row(spacing=50,
                controls=[textTipo, textMarca, textAnnoAcquisto, btnMinus, textValoreEuro, btnAdd],
                alignment=ft.MainAxisAlignment.CENTER),
+        # va inserito il bottone "aggiungi strumento"
 
         # Sezione 4
         ft.Divider(),
