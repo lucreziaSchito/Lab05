@@ -83,6 +83,35 @@ def main(page: ft.Page):
 
     # Handlers per la gestione dei pulsanti utili all'inserimento di un nuovo strumento
     # TODO
+    def handleNuovoStrumento(e) :
+        #controlli sull'inserimento
+        if not textTipo.value or not textMarca.value or not textAnnoAcquisto.value:
+            alert.show_alert("Errore: compila tutti i campi.")
+            return
+
+        if textTipo.value.isdigit() or textMarca.value.isdigit():
+            alert.show_alert("Errore: inserire valori alfanumerici per tipo e marca")
+            return
+
+        if not textAnnoAcquisto.value.isdigit():
+            alert.show_alert("Errore: inserire valori di tipo numerico per anno d'acquisto")
+            return
+
+        if len(str(textAnnoAcquisto.value)) > 4 :
+            alert.show_alert("Errore: l'anno d'acquisto da lei inserito non è valido")
+            return
+
+        # si procede all'inserimento
+        deposito.aggiungi_strumento(textTipo.value, textMarca.value, textAnnoAcquisto.value, textValoreEuro.value)
+
+        # svuoto i campi
+        textTipo.value = "Tipo"
+        textMarca.value = "Marca"
+        textAnnoAcquisto.value = "Anno Acquisto"
+        textValoreEuro.value = 0
+
+        # aggiorno la lista di strumenti mostrata a schermo all'interno del contenitore ListView
+        aggiorna_lista_strumenti()
 
     # --- EVENTI ---
     toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=cambia_tema)
@@ -90,6 +119,8 @@ def main(page: ft.Page):
 
     # Pulsanti per la gestione dell'inserimento di un nuovo strumento
     # TODO
+
+    btnStrumento = ft.Button("Aggiungi strumento", on_click= handleNuovoStrumento)
 
     # --- LAYOUT ---
     page.add(
@@ -113,7 +144,7 @@ def main(page: ft.Page):
         ft.Row(spacing=50,
                controls=[textTipo, textMarca, textAnnoAcquisto, btnMinus, textValoreEuro, btnAdd],
                alignment=ft.MainAxisAlignment.CENTER),
-        # va inserito il bottone "aggiungi strumento"
+        ft.Row([btnStrumento], alignment = ft.MainAxisAlignment.CENTER),
 
         # Sezione 4
         ft.Divider(),
